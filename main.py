@@ -31,7 +31,7 @@ def getUserData(min_date: str, max_date: str, user):
 
 	# Get how many correction the user did
 	ranged_scales = [x for x in scales if not x['filled_at'] == None and x['filled_at'][:len(min_date)] >= min_date and x['filled_at'][:len(max_date)] <= max_date]
-	evals = len([x for x in ranged_scales if not x['corrector'] == [] and x['corrector']['id'] == id])
+	evals = len([x for x in ranged_scales if not x['corrector'] == {} and x['corrector']['id'] == id])
 
 	# Get how many projects where attempted and how many passed
 	dprint("fetching projects_users...")
