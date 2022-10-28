@@ -51,6 +51,7 @@ def getUsersData(min_date: str, max_date: str):
 		exit(-1)
 
 	users = a.get("cursus/21/cursus_users", data={'filter':{'campus_id':campus_id}})
+	print("user_id,login,evals_done,attempts,validations,building_access")
 	for user in users:
 		getUserData(min_date, max_date, user['user'])
 
