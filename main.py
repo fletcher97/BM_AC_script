@@ -52,7 +52,7 @@ def getUsersData(min_date: str, max_date: str):
 		print("No campus id. Did someone forget to source .env?")
 		exit(-1)
 
-	users = a.get("cursus/21/cursus_users", data={'filter':{'campus_id':campus_id}})
+	users = a.get("cursus/21/cursus_users", data={'filter':{'campus_id':campus_id, 'active':"true"}})
 	print("user_id,login,evals_done,attempts,validations,building_access")
 	if not debug:
 		users = tqdm.tqdm(users)
