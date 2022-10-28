@@ -3,6 +3,8 @@ import sys
 import dropi
 from pprint import pprint as pp
 
+import tqdm
+
 import dorless
 
 
@@ -40,9 +42,9 @@ def getUserData(min_date: str, max_date: str, user):
 	attempt = len([x for x in ranged_projects if x['marked']])
 	validated = len([x for x in ranged_projects if x['validated?']])
 	if dorless.checkDorlet:
-		print(f"{id},{user['login']},{evals},{attempt},{validated},{dorless.getTimes(dorless.getUserId(user['login']), min_date, max_date)}", flush=True)
+		tqdm.tqdm.write(f"{id},{user['login']},{evals},{attempt},{validated},{dorless.getTimes(dorless.getUserId(user['login']), min_date, max_date)}")
 	else :
-		print(f"{id},{user['login']},{evals},{attempt},{validated}", flush=True)
+		tqdm.tqdm.write(f"{id},{user['login']},{evals},{attempt},{validated}")
 
 def getUsersData(min_date: str, max_date: str):
 	campus_id = os.getenv("CAMPUS_ID")
@@ -52,7 +54,11 @@ def getUsersData(min_date: str, max_date: str):
 
 	users = a.get("cursus/21/cursus_users", data={'filter':{'campus_id':campus_id}})
 	print("user_id,login,evals_done,attempts,validations,building_access")
+	if not debug:
+		users = tqdm.tqdm(users)
 	for user in users:
+		if not debug:
+			users.set_description(user['user']['login'])
 		getUserData(min_date, max_date, user['user'])
 
 if __name__ == "__main__":
